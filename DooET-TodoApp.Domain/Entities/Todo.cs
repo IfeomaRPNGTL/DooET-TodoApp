@@ -18,6 +18,7 @@ namespace DooET_TodoApp.Domain.Entities
         public DateTime DueDate { get; set;}
         public TaskStatus Status { get; set; }
         public PriorityLevel Priority { get; set; }
+        public string Email { get; set; }
         public int UserId { get; set; }
         public User? User { get; set; }
         public int CategoryId { get; set; }

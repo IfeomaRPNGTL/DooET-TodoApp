@@ -15,7 +15,9 @@ namespace DooET_ToDoApp.Infrastructure.Persistence.SchemaDefinition
         {
             builder.HasKey(t => t.UserId);
 
-            builder.Property(t => t.UserName)
+            builder.Property(t => t.FirstName)
+                .HasMaxLength(250);
+            builder.Property(t => t.LastName)
                 .HasMaxLength(250);
 
             builder.HasIndex(t => t.Password).IsUnique();

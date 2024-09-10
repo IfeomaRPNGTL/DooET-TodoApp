@@ -26,12 +26,28 @@ namespace DooET_ToDoApp.Infrastructure.Service
             _userRepository = userRepository;
             _readUserRepository = readUserRepository;
         }
-        public async Task<BaseResponse<TodoCreationResponse>> CreateTodo(TodoCreationRequest dto, UserCreationRequest request)
+        public async Task<BaseResponse<TodoCreationResponse>> CreateTodo(TodoCreationRequest dto)
         {
           // create user
           var response = new BaseResponse<TodoCreationResponse>();
-            //var user = new UserCreationRequest.Copy(request);
-          //var createUser = await _userRepository.AddAsync
+          var user = TodoCreationRequest.Copy(dto);
+          var createuser = await _todoRepository.AddAsync(user);
+          if(createuser is null || createuser.Id < 1) {
+                response.Message = "Couldn't create user, try again";
+                response.Data = new TodoCreationResponse();
+                return response;
+          }
+          
+
+          var userTodo = TodoCreationRequest.Copy(createuser, dto);
+          var createUserTodo = _todoRepository.AddAsync(userTodo);
+            if (createUserTodo is null || createUserTodo.Id < 1)
+            {
+                response.Message = "Couldn't create Todo, try again";
+                response.Data = new TodoCreationResponse();
+                return response;
+            }
+            return response;
         }
 
         public Task<BaseResponse<TodoUpdateResponse>> UpdateTodo(TodoUpdateRequest request)

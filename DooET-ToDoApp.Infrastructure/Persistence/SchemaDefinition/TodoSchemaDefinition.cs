@@ -36,7 +36,8 @@ namespace DooET_ToDoApp.Infrastructure.Persistence.SchemaDefinition
             builder.Property(t => t.CategoryId)
                 .IsRequired();
 
-
+            builder.HasIndex(t => t.Email).IsUnique();
+            builder.Property(t => t.Email).HasMaxLength(250);
         }
     }
 }
